@@ -1,6 +1,5 @@
 var mysql = require('mysql');
 var http = require('http');
-const mysql = require('mysql');
 
 
 var con = mysql.createConnection({
