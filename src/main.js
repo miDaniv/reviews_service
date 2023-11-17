@@ -1,4 +1,5 @@
 var mysql = require('mysql');
+var http = require('http');
 
 var con = mysql.createConnection({
   host: "localhost",
@@ -11,13 +12,7 @@ con.connect(function(err) {
   console.log("Connected!");
 });
 
-const port = 8080;
-
-app.get('/', (req, res) => {
-  res.send('Привіт, світ!');
-});
-
-app.listen(port, () => {
-  console.log(`Сервер запущено на порту ${port}`);
-});
-
+http.createServer(function (req, res) {
+  res.writeHead(200, {'Content-Type': 'text/plain'});
+  res.end('Hello World!');
+}).listen(8080);
