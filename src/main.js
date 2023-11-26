@@ -1,31 +1,27 @@
-var mysql = require('mysql');
-var http = require('http');
+const express = require('express')
+const bodyParser = require('body-parser');
+const app = express()
+const login = require('./login')
+const path = require('path');
+const con = require('./connection')
 
 
-var con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "password"
+app.use(express.static(path.join(__dirname, '../../reviews_frontend/client', 'build')));
+app.get('/', (req, res) => {
+  console.log('hello');
+  res.sendFile(path.join(__dirname, '../../reviews_frontend/client/build', 'index.html'));
 });
 
-
-con.connect(function(err) {
-  if (err) throw err;
-  console.log("Connected!");
+app.get('/contact', (req, res) => {
+  console.log('Звернення до сторінки /example');
+  res.send('Ви на сторінці /example');
 });
 
+app.use(express.static(path.join(__dirname, '../../reviews_frontend/client/build')));
 
-http.createServer(function (req, res) {
-  res.writeHead(200, {'Content-Type': 'text/plain'});
-  res.end('Hello World!');
-}).listen(8080);
-
-
-con.connect((err) => {
-  if (err) {
-    console.error('Помилка підключення до бази даних:', err);
-  } else {
-    console.log('Підключено до бази даних');
-  }
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../reviews_frontend/client/build', 'index.html'));
 });
 
+const PORT = process.env.PORT || 8080;
+app.listen(PORT);
