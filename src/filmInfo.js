@@ -8,8 +8,6 @@ app.use(express.json());
 
 app.get('/api/film-info/:id', (req, res) => {
   const movieId = req.params.id;
-
-  console.log("get");
   const sql = 'SELECT * FROM filmdata WHERE Id = ?';
   con.query(sql, [movieId], (err, result) => {
     if (err) {

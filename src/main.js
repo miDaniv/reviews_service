@@ -4,7 +4,7 @@ const app = express();
 const path = require('path');
 const register = require('./register'); 
 const login = require('./login'); 
-const userPage = require('./users.controller'); 
+const userInfo = require('./users.controller'); 
 const addFilm = require('./addFilm'); 
 const filmInfo = require('./filmInfo'); 
 
@@ -13,7 +13,7 @@ app.use(express.static(path.join(__dirname, '../../reviews_frontend/client', 'bu
 
 app.use(register);
 app.use(login);
-app.use(userPage);
+app.use(userInfo);
 app.use(addFilm);
 app.use(filmInfo);
 
