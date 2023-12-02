@@ -7,6 +7,9 @@ const login = require('./login');
 const userInfo = require('./users.controller'); 
 const addFilm = require('./addFilm'); 
 const filmInfo = require('./filmInfo'); 
+const Todo = require('./To-do'); 
+const search = require('./search'); 
+const commentSection = require('./commentSection'); 
 
 app.use(cors());
 app.use(express.static(path.join(__dirname, '../../reviews_frontend/client', 'build')));
@@ -16,6 +19,9 @@ app.use(login);
 app.use(userInfo);
 app.use(addFilm);
 app.use(filmInfo);
+app.use(Todo);
+app.use(search);
+app.use(commentSection);
 
 app.get("*", function (request, response) {
   response.sendFile(path.resolve(__dirname, '../../reviews_frontend/client/build', "index.html"));

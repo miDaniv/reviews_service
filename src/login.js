@@ -1,9 +1,9 @@
 const express = require('express');
-const router = express();
-const path = require('path');
+const router = express.Router();
 const con = require('./connection');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 router.use(bodyParser.json());
 router.post('/login', async (req, res) => {
@@ -28,7 +28,9 @@ router.post('/login', async (req, res) => {
         const isPasswordMatch = await bcrypt.compare(password, hashedPasswordFromDB);
 
         if (isPasswordMatch) {
-          return res.status(200).json({ message: 'Ви успішно увійшли в акаунт' });
+          const token = jwt.sign({ userId: result[0].Id, username: result[0].Login }, 'your_secret_key');
+
+          return res.status(200).json({ token, message: 'Ви успішно увійшли в акаунт' });
         } else {
           console.error('Помилка авторизації: Невірний пароль');
           return res.status(401).json({ message: 'Невірний логін або пароль' });
